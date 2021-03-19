@@ -4,5 +4,9 @@
   "description": "Script para popular banco de dados para os testes automatizados.",
   "main": "index.js",
   "author": "Thiago Rocha",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "knex": "^0.95.2",
+    "pg": "^8.5.1"
+  }
 }
