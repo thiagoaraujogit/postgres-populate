@@ -50,10 +50,15 @@ jobs:
             ${{ runner.os }}-build
             ${{ runner.os }}
 
-      - name: Install node dependencies
-        run: npm ci
+      - name: Install dependencies
+        run: |
+          npm ci
+          apt-get install postgresql-client -y --no-install-recommends
 
       - name: Run Knex processes
         run: |
           echo "Running Knex.js..."
           npm run knex
+      
+      - name: Verify tables
+        run: export PGPASSWORD='postgres'; psql -h postgres -U postgres -d knex_test -c 'SELECT * FROM users'
