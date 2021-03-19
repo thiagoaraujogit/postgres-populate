@@ -6,7 +6,8 @@
   "author": "Thiago Rocha",
   "license": "MIT",
   "scripts": {
-    "knex": "knex migrate:latest && knex seed:run"
+    "knex": "knex migrate:latest && knex seed:run",
+    "verify": "node src/database/verify/verify_tables.js"
   },
   "dependencies": {
     "knex": "^0.95.2",
