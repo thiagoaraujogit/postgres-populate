@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "Thiago Rocha",
   "license": "MIT",
+  "scripts": {
+    "knex": "knex migrate:latest && knex seed:run"
+  },
   "dependencies": {
     "knex": "^0.95.2",
     "pg": "^8.5.1"

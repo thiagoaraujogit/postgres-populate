@@ -1,0 +1,59 @@
+name: Exec Knex
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Run:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    services:
+      postgres:
+        image: postgres:10-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: knex_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Get source code
+        uses: actions/checkout@v2
+
+      # Setup Node 8.x
+      - name: Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache Node dependencies
+        uses: actions/cache@v2
+        env:
+          node-cache-name: cache-node-modules
+        with:
+          path: ~./npm
+          key: ${{ runner.os }}-build-production-${{ env.node-cache-name }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-production-${{ env.node-cache-name }}
+            ${{ runner.os }}-build
+            ${{ runner.os }}
+
+      - name: Install yarn
+        run: npm install yarn -g
+
+      - name: Run Knex processes
+        run: |
+          echo "Running Knex.js..."
+          yarn knex
