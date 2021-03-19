@@ -50,8 +50,8 @@ jobs:
             ${{ runner.os }}-build
             ${{ runner.os }}
 
-      - name: Install yarn
-        run: npm install yarn -g
+      - name: Install yarn and knex
+        run: npm install yarn -g && yarn global add knex
 
       - name: Run Knex processes
         run: |
