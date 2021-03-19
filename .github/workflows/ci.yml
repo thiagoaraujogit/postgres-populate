@@ -53,7 +53,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
-          apt-get install postgresql-client -y --no-install-recommends
+          sudo apt-get install postgresql-client -y --no-install-recommends
 
       - name: Run Knex processes
         run: |
